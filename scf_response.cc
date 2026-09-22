@@ -585,7 +585,7 @@ void SCFResponseSolver::compute_hyperpolarizability(
     std::string type, double omega) {
 
     if ( !is_hf_ ) {
-        throw PsiException("unsupported QED-DFT functional for hyperpolarizabilities. Use QED_DFT_FUNCTIONAL HF", __FILE__, __LINE__);
+        throw PsiException("DFT hyperpolarizbalities are not supported", __FILE__, __LINE__);
     }
 
     // dimension of the problem
@@ -922,7 +922,7 @@ void SCFResponseSolver::compute_hyperpolarizability(
                 outfile->Printf("    BETA(%s%s%s) %20.12lf\n", dir[p].c_str(), dir[q].c_str(), dir[r].c_str(), beta);
 
                 // add hyperpolarizabilities to psi variables
-                std::string label = "QED-DFT BETA(";
+                std::string label = "BETA(";
                 label += dir[p] + dir[q] + dir[r] + ")";
                 std::transform(label.begin(), label.end(), label.begin(),
                     [](unsigned char c) { return std::toupper(c); });
