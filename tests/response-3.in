@@ -1,7 +1,4 @@
-
-# PYTHONPATH must include directory above plugin directory.
-#     Define either externally or here, then import plugin.
-sys.path.insert(0, './..')
+sys.path.insert(0, './../..')
 import scf_response
 
 molecule {
@@ -24,5 +21,3 @@ set {
 en, wfn = energy('pbe', return_wfn = True)
 
 energy('scf_response', ref_wfn = wfn)
-
-scf_response.exampleFN()

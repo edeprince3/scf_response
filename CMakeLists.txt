@@ -37,7 +37,11 @@ project(scf_response CXX)
 
 find_package(psi4 1.1 REQUIRED)
 
-add_psi4_plugin(scf_response 
+add_psi4_plugin(
+    scf_response 
     plugin.cc
     diis.cc
-    scf_response.cc)
+    ks_response.cc
+    uks_response.cc
+    rks_response.cc
+)

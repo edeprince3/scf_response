@@ -4,3 +4,7 @@ __pycache__/
 do-configure
 scf_response.so
 timer.dat
+*.log 
+*.out
+CMakeCache.txt
+cmake_install.cmake

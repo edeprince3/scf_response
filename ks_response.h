@@ -24,8 +24,8 @@
  *  @END LICENSE
  */
 
-#ifndef SCF_RESPONSE_H
-#define SCF_RESPONSE_H
+#ifndef KS_RESPONSE_H
+#define KS_RESPONSE_H
 
 // for dft
 #include "psi4/libfock/v.h"
@@ -36,29 +36,37 @@
 
 namespace psi {namespace scf_response{ 
 
-class SCFResponseSolver: public Wavefunction {
+class KSResponseSolver: public Wavefunction {
 
   public:
 
-    SCFResponseSolver(std::shared_ptr<Wavefunction> reference_wavefunction, Options& options_);
+    KSResponseSolver(std::shared_ptr<Wavefunction> reference_wavefunction, Options& options_);
 
-    ~SCFResponseSolver();
+    ~KSResponseSolver();
 
     void common_init();
 
     void compute_properties();
-    void compute_polarizability(std::vector<double>X, std::vector<double>Y, double omega);
-
-    std::vector<std::vector<double>> first_order_response(std::vector<std::shared_ptr<Matrix>> op_a, std::vector<std::shared_ptr<Matrix>> op_b, double omega);
 
   protected:
 
-    void compute_hyperpolarizability(std::vector<std::vector<double>>amps_wx, 
-                                     std::vector<std::vector<double>>amps_wy,
-                                     std::vector<std::vector<double>>amps_wz,
-                                     std::string type, double omega);
+    virtual std::vector<std::vector<double>> first_order_response(
+        std::vector<std::shared_ptr<Matrix>> op_a, 
+        std::vector<std::shared_ptr<Matrix>> op_b, 
+        double omega
+    ){ throw PsiException("KSResponseSolver::first_order_response is not implemented.", __FILE__, __LINE__); }
 
-    void build_Au_Bu(int N, int L, double *u, double *ABu);
+    virtual void compute_polarizability(
+        std::vector<double>X, 
+        std::vector<double>Y, 
+        double omega
+    ){ throw PsiException("KSResponseSolver::compute_polarizability is not implemented.", __FILE__, __LINE__); }
+
+    virtual void compute_hyperpolarizability(std::vector<std::vector<double>>amps_wx,
+        std::vector<std::vector<double>>amps_wy,
+        std::vector<std::vector<double>>amps_wz,
+        std::string type, double omega
+    ){ throw PsiException("KSResponseSolver::compute_hyperpolarizability is not implemented.", __FILE__, __LINE__); }
 
     std::shared_ptr<VBase> potential_;
 

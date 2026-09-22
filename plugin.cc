@@ -35,7 +35,8 @@
 #include "psi4/libpsio/psio.hpp"
 #include "psi4/libpsio/psio.hpp"
 
-#include "scf_response.h"
+#include "uks_response.h"
+#include "rks_response.h"
 
 namespace psi{ namespace scf_response {
 
@@ -55,8 +56,13 @@ SharedWavefunction scf_response(SharedWavefunction ref_wfn, Options& options)
 {
     // response properties
     if ( options["PROPERTY"].has_changed() ) {
-        std::shared_ptr<SCFResponseSolver> utddft (new SCFResponseSolver((std::shared_ptr<Wavefunction>)ref_wfn,options));
-        utddft->compute_properties();
+        if ( options.get_str("REFERENCE") == "UKS" || options.get_str("REFERENCE") == "UHF" ) {
+            std::shared_ptr<UKSResponseSolver> uks (new UKSResponseSolver((std::shared_ptr<Wavefunction>)ref_wfn, options));
+            uks->compute_properties();
+        }else if ( options.get_str("REFERENCE") == "RHF" || options.get_str("REFERENCE") == "RKS" ) {
+            std::shared_ptr<RKSResponseSolver> rks (new RKSResponseSolver((std::shared_ptr<Wavefunction>)ref_wfn, options));
+            rks->compute_properties();
+        }
     }else {
         throw PsiException("hmm probably you meant to set PROPERTY",__FILE__,__LINE__);
     }
