@@ -1,0 +1,28 @@
+
+# PYTHONPATH must include directory above plugin directory.
+#     Define either externally or here, then import plugin.
+sys.path.insert(0, './..')
+import scf_response
+
+molecule {
+O  0.00000   0.00000   0.11572
+H  0.00000   0.74879  -0.46288
+H  0.00000  -0.74879  -0.46288
+nocom
+no_reorient
+symmetry c1
+}
+
+set {
+  scf_type pk
+  basis cc-pvdz
+  property "POLARIZABILITY"
+  omega [0.15]
+  reference uks
+}
+
+en, wfn = energy('pbe', return_wfn = True)
+
+energy('scf_response', ref_wfn = wfn)
+
+scf_response.exampleFN()

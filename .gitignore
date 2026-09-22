@@ -1,0 +1,6 @@
+CMakeFiles/
+Makefile
+__pycache__/
+do-configure
+scf_response.so
+timer.dat
