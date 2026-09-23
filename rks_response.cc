@@ -629,7 +629,7 @@ void RKSResponseSolver::build_Au_Bu(int N, int L, double *u, double *ABu){
         // xc?
         // a <- a
         if ( needs_xc_ ) {
-            sa->axpy(1.0, Vx[count]);
+            sa->axpy(2.0, Vx[count]);
         }
 
         // exact exchange?
